@@ -24,9 +24,15 @@ declare(strict_types=1);
 namespace pocketmine\item\enchantment;
 
 use pocketmine\block\BlockTypeIds;
+use pocketmine\item\Armor;
+use pocketmine\item\Axe;
+use pocketmine\item\Bow;
 use pocketmine\item\enchantment\AvailableEnchantmentRegistry as EnchantmentRegistry;
 use pocketmine\item\Item;
 use pocketmine\item\ItemTypeIds;
+use pocketmine\item\Pickaxe;
+use pocketmine\item\Shovel;
+use pocketmine\item\Sword;
 use pocketmine\item\VanillaItems as Items;
 use pocketmine\utils\Limits;
 use pocketmine\utils\Random;
@@ -88,11 +94,37 @@ final class EnchantingHelper{
 		$middleRequiredLevel = (int) floor($baseRequiredLevel * 2 / 3 + 1);
 		$bottomRequiredLevel = max($baseRequiredLevel, $bookshelfCount * 2);
 
-		return [
-			self::createOption($random, $input, $topRequiredLevel),
-			self::createOption($random, $input, $middleRequiredLevel),
-			self::createOption($random, $input, $bottomRequiredLevel),
-		];
+		$sharpnessLevel = ($bookshelfCount >= 15) ? 5 : (($bookshelfCount >= 12) ? 4 : (($bookshelfCount >= 8) ? 3 : (($bookshelfCount >= 4) ? 2 : 1)));
+		$efficiencyLevel = ($bookshelfCount >= 15) ? 5 : (($bookshelfCount >= 12) ? 4 : (($bookshelfCount >= 8) ? 3 : (($bookshelfCount >= 4) ? 2 : 1)));
+		$unbreakingLevel = ($bookshelfCount >= 15) ? 3 : (($bookshelfCount >= 12) ? 2 : 1);
+		$fireAspectLevel = ($bookshelfCount >= 15) ? 2 : (($bookshelfCount >= 8) ? 2 : 1);
+		$protectionLevel = ($bookshelfCount >= 15) ? 4 : (($bookshelfCount >= 12) ? 3 : (($bookshelfCount >= 8) ? 2 : 1));
+		$flameLevel = 1;
+		$infinityLevel = 1;
+		if($input instanceof Sword) {
+			return [
+				new EnchantingOption($topRequiredLevel, "Sharpness", [ new EnchantmentInstance(VanillaEnchantments::SHARPNESS(), $sharpnessLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)]),
+				new EnchantingOption($bottomRequiredLevel, "Aura de feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_ASPECT(), $fireAspectLevel)])
+			];
+		} else if($input instanceof Armor) {
+			return [
+				new EnchantingOption($topRequiredLevel, "Protection", [ new EnchantmentInstance(VanillaEnchantments::PROTECTION(), $protectionLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)])
+			];
+		} else if($input instanceof Axe || $input instanceof Pickaxe || $input instanceof Shovel) {
+			return [
+				new EnchantingOption($topRequiredLevel, "Efficacité", [ new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), $efficiencyLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)])
+			];
+		} else if($input instanceof Bow) {
+			return [
+				new EnchantingOption($topRequiredLevel, "Flame", [ new EnchantmentInstance(VanillaEnchantments::FLAME(), $flameLevel)]),
+				new EnchantingOption($topRequiredLevel, "Infinité", [ new EnchantmentInstance(VanillaEnchantments::INFINITY(), $infinityLevel)])
+			];
+		} else {
+			return [];
+		}
 	}
 
 	private static function countBookshelves(Position $tablePos) : int{
