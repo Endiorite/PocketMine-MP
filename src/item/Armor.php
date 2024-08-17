@@ -172,4 +172,9 @@ class Armor extends Durable{
 			$tag->setInt(self::TAG_CUSTOM_COLOR, Binary::signInt($this->customColor->toARGB())) :
 			$tag->removeTag(self::TAG_CUSTOM_COLOR);
 	}
+
+	public function isValidRepairMaterial(Item $material) : bool{
+		return in_array($material->getTypeId(), $this->armorInfo->getMaterial()->getRepairMaterials(), true);
+	}
+
 }

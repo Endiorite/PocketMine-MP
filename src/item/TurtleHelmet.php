@@ -38,4 +38,9 @@ class TurtleHelmet extends Armor{
 
 		return false;
 	}
+
+	public function isValidRepairMaterial(Item $material) : bool{
+		return $material->getTypeId() === ItemTypeIds::SCUTE;
+	}
+
 }

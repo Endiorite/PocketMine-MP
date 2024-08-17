@@ -29,7 +29,8 @@ class ArmorMaterial{
 
 	public function __construct(
 		private readonly int $enchantability,
-		private readonly ?Sound $equipSound = null
+		private readonly ?Sound $equipSound = null,
+		private readonly array $repairMaterials = []
 	){
 	}
 
@@ -49,4 +50,9 @@ class ArmorMaterial{
 	public function getEquipSound() : ?Sound{
 		return $this->equipSound;
 	}
+
+	public function getRepairMaterials() : array{
+		return $this->repairMaterials;
+	}
+
 }

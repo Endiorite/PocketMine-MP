@@ -61,4 +61,9 @@ abstract class TieredTool extends Tool{
 	public function isFireProof() : bool{
 		return $this->tier === ToolTier::NETHERITE;
 	}
+
+	public function isValidRepairMaterial(Item $material) : bool {
+		return in_array($material->getTypeId(), $this->tier->getRepairMaterials(), true);
+	}
+
 }
