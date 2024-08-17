@@ -132,7 +132,7 @@ class ItemFrame extends Flowable{
 	}
 
 	public function onInteract(Item $item, int $face, Vector3 $clickVector, ?Player $player = null, array &$returnedItems = []) : bool{
-		if($this->framedItem !== null){
+		/*if($this->framedItem !== null){
 			$this->itemRotation = ($this->itemRotation + 1) % self::ROTATIONS;
 
 			$this->position->getWorld()->addSound($this->position, new ItemFrameRotateItemSound());
@@ -144,7 +144,7 @@ class ItemFrame extends Flowable{
 			return true;
 		}
 
-		$this->position->getWorld()->setBlock($this->position, $this);
+		$this->position->getWorld()->setBlock($this->position, $this);*/
 
 		return true;
 	}
