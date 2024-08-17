@@ -104,9 +104,8 @@ final class EnchantingHelper{
 
 		$bookshelfCount = self::countBookshelves($tablePos);
 		$baseRequiredLevel = $random->nextRange(1, 8) + ($bookshelfCount >> 1) + $random->nextRange(0, $bookshelfCount);
-		//$topRequiredLevel = (int) floor(max($baseRequiredLevel / 2, 1));
-		$topRequiredLevel = (int) floor($baseRequiredLevel * 2 / 3 + 1);
-		//$middleRequiredLevel = (int) floor($baseRequiredLevel * 2 / 3 + 1);
+		$topRequiredLevel = (int) floor(max($baseRequiredLevel / 1, 1));
+		$middleRequiredLevel = (int) floor($baseRequiredLevel * 1 / 3 + 1);
 		$bottomRequiredLevel = max($baseRequiredLevel, $bookshelfCount * 2);
 
 		$sharpnessLevel = ($bookshelfCount >= 15) ? 5 : (($bookshelfCount >= 12) ? 4 : (($bookshelfCount >= 8) ? 3 : (($bookshelfCount >= 4) ? 2 : 1)));
@@ -120,36 +119,35 @@ final class EnchantingHelper{
 		if($input instanceof Sword) {
 			return [
 				new EnchantingOption($topRequiredLevel, "Sharpness", [ new EnchantmentInstance(VanillaEnchantments::SHARPNESS(), $sharpnessLevel)]),
-				new EnchantingOption($topRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)]),
-				new EnchantingOption($topRequiredLevel, "Aura de feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_ASPECT(), $fireAspectLevel)])
+				new EnchantingOption($middleRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Aura de feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_ASPECT(), $fireAspectLevel)])
 			];
 		} else if($input instanceof Armor) {
 			return [
 				new EnchantingOption($topRequiredLevel, "Protection", [ new EnchantmentInstance(VanillaEnchantments::PROTECTION(), $protectionLevel)]),
-				new EnchantingOption($topRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)]),
 				new EnchantingOption($topRequiredLevel, "Protection contre le feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_PROTECTION(), $fireProtectionLevel)]),
 			];
 		} else if($input instanceof Axe || $input instanceof Pickaxe || $input instanceof Shovel) {
 			return [
 				new EnchantingOption($topRequiredLevel, "Efficacité", [ new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), $efficiencyLevel)]),
-				new EnchantingOption($topRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)])
+				new EnchantingOption($middleRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)])
 			];
 		} else if($input instanceof Bow) {
 			return [
-				new EnchantingOption($topRequiredLevel, "Flame", [ new EnchantmentInstance(VanillaEnchantments::FLAME(), $flameLevel)]),
-				new EnchantingOption($topRequiredLevel, "Infinité", [ new EnchantmentInstance(VanillaEnchantments::INFINITY(), $infinityLevel)])
+				new EnchantingOption($bottomRequiredLevel, "Flame", [ new EnchantmentInstance(VanillaEnchantments::FLAME(), $flameLevel)]),
+				new EnchantingOption($bottomRequiredLevel, "Infinité", [ new EnchantmentInstance(VanillaEnchantments::INFINITY(), $infinityLevel)])
 			];
 		} else if($input instanceof Book) {
-			$bookRequiredLevel = (int) floor(max($baseRequiredLevel, 1));
 			$enchantOption = [
-				new EnchantingOption($bookRequiredLevel, "Flame", [ new EnchantmentInstance(VanillaEnchantments::FLAME(), $flameLevel)]),
-				new EnchantingOption($bookRequiredLevel, "Infinité", [ new EnchantmentInstance(VanillaEnchantments::INFINITY(), $infinityLevel)]),
-				new EnchantingOption($bookRequiredLevel, "Efficacité", [ new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), $efficiencyLevel)]),
-				new EnchantingOption($bookRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)]),
-				new EnchantingOption($bookRequiredLevel, "Aura de feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_ASPECT(), $fireAspectLevel)]),
-				new EnchantingOption($bookRequiredLevel, "Sharpness", [ new EnchantmentInstance(VanillaEnchantments::SHARPNESS(), $sharpnessLevel)]),
-				new EnchantingOption($bookRequiredLevel, "Protection", [ new EnchantmentInstance(VanillaEnchantments::PROTECTION(), $protectionLevel)]),
-				new EnchantingOption($bookRequiredLevel, "Protection contre le feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_PROTECTION(), $fireProtectionLevel)])
+				new EnchantingOption($middleRequiredLevel, "Flame", [ new EnchantmentInstance(VanillaEnchantments::FLAME(), $flameLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Infinité", [ new EnchantmentInstance(VanillaEnchantments::INFINITY(), $infinityLevel)]),
+				new EnchantingOption($topRequiredLevel, "Efficacité", [ new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), $efficiencyLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Solidité", [ new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), $unbreakingLevel)]),
+				new EnchantingOption($middleRequiredLevel, "Aura de feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_ASPECT(), $fireAspectLevel)]),
+				new EnchantingOption($topRequiredLevel, "Sharpness", [ new EnchantmentInstance(VanillaEnchantments::SHARPNESS(), $sharpnessLevel)]),
+				new EnchantingOption($topRequiredLevel, "Protection", [ new EnchantmentInstance(VanillaEnchantments::PROTECTION(), $protectionLevel)]),
+				new EnchantingOption($topRequiredLevel, "Protection contre le feu", [ new EnchantmentInstance(VanillaEnchantments::FIRE_PROTECTION(), $fireProtectionLevel)])
 			];
 			$randomEnchant = array_rand($enchantOption, 3);
 			return [
