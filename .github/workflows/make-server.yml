@@ -11,17 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'  # Remplacez par la version PHP que vous utilisez
-        tools: composer
+      - name: Download custom PHP binary
+        run: |
+          curl -L -o php-custom.tar.gz "https://github.com/pmmp/PHP-Binaries/releases/download/php-8.2-latest/PHP-Linux-x86_64-PM5.tar.gz"
+          
+          mkdir -p $GITHUB_WORKSPACE/custom-bin
+          
+          tar -xzf php-custom.tar.gz -C $GITHUB_WORKSPACE/custom-bin
+          
+          chmod +x $GITHUB_WORKSPACE/custom-bin/php
 
-    - name: Install dependencies
-      run: composer install
+      - name: Set up PHP (custom version)
+        run: |
+          export PATH="$GITHUB_WORKSPACE/custom-bin:$PATH"
+          
+          php -v
 
-    - name: Run make-server
-      run: composer make-server
+      - name: Install Composer
+        run: |
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=$GITHUB_WORKSPACE/custom-bin
+          export PATH="$GITHUB_WORKSPACE/custom-bin:$PATH"
+          composer --version
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run make-server
+        run: composer make-server
