@@ -811,7 +811,7 @@ final class VanillaBlocks{
 		self::register("bed", new Bed(new BID(Ids::BED, TileBed::class), "Bed Block", new Info(new BreakInfo(0.2))));
 		self::register("bedrock", new Bedrock(new BID(Ids::BEDROCK), "Bedrock", new Info(BreakInfo::indestructible())));
 
-		self::register("beetroots", new Beetroot(new BID(Ids::BEETROOTS), "Beetroot Block", new Info(BreakInfo::instant())));
+		self::register("beetroots", new Beetroot(new BID(Ids::BEETROOTS, \pocketmine\block\tile\Crops::class), "Beetroot Block", new Info(BreakInfo::instant())));
 		self::register("bell", new Bell(new BID(Ids::BELL, TileBell::class), "Bell", new Info(BreakInfo::pickaxe(5.0, ToolTier::WOOD))));
 		self::register("blue_ice", new BlueIce(new BID(Ids::BLUE_ICE), "Blue Ice", new Info(BreakInfo::pickaxe(2.8))));
 		self::register("bone_block", new BoneBlock(new BID(Ids::BONE_BLOCK), "Bone Block", new Info(BreakInfo::pickaxe(2.0, ToolTier::WOOD))));
@@ -826,7 +826,7 @@ final class VanillaBlocks{
 		self::register("brown_mushroom", new BrownMushroom(new BID(Ids::BROWN_MUSHROOM), "Brown Mushroom", new Info(BreakInfo::instant(), [Tags::POTTABLE_PLANTS])));
 		self::register("cactus", new Cactus(new BID(Ids::CACTUS), "Cactus", new Info(new BreakInfo(0.4), [Tags::POTTABLE_PLANTS])));
 		self::register("cake", new Cake(new BID(Ids::CAKE), "Cake", new Info(new BreakInfo(0.5))));
-		self::register("carrots", new Carrot(new BID(Ids::CARROTS), "Carrot Block", new Info(BreakInfo::instant())));
+		self::register("carrots", new Carrot(new BID(Ids::CARROTS, \pocketmine\block\tile\Crops::class), "Carrot Block", new Info(BreakInfo::instant())));
 
 		$chestBreakInfo = new Info(BreakInfo::axe(2.5));
 		self::register("chest", new Chest(new BID(Ids::CHEST, TileChest::class), "Chest", $chestBreakInfo));
@@ -947,7 +947,7 @@ final class VanillaBlocks{
 		self::register("lever", new Lever(new BID(Ids::LEVER), "Lever", new Info(new BreakInfo(0.5))));
 		self::register("magma", new Magma(new BID(Ids::MAGMA), "Magma Block", new Info(BreakInfo::pickaxe(0.5, ToolTier::WOOD))));
 		self::register("melon", new Melon(new BID(Ids::MELON), "Melon Block", new Info(BreakInfo::axe(1.0))));
-		self::register("melon_stem", new MelonStem(new BID(Ids::MELON_STEM), "Melon Stem", new Info(BreakInfo::instant())));
+		self::register("melon_stem", new MelonStem(new BID(Ids::MELON_STEM, \pocketmine\block\tile\Crops::class), "Melon Stem", new Info(BreakInfo::instant())));
 		self::register("monster_spawner", new MonsterSpawner(new BID(Ids::MONSTER_SPAWNER, TileMonsterSpawner::class), "Monster Spawner", new Info(BreakInfo::pickaxe(5.0, ToolTier::WOOD))));
 		self::register("mycelium", new Mycelium(new BID(Ids::MYCELIUM), "Mycelium", new Info(BreakInfo::shovel(0.6), [Tags::DIRT])));
 
@@ -969,7 +969,7 @@ final class VanillaBlocks{
 		self::register("obsidian", new Opaque(new BID(Ids::OBSIDIAN), "Obsidian", new Info(BreakInfo::pickaxe(35.0 /* 50 in PC */,  ToolTier::DIAMOND, 6000.0))));
 		self::register("packed_ice", new PackedIce(new BID(Ids::PACKED_ICE), "Packed Ice", new Info(BreakInfo::pickaxe(0.5))));
 		self::register("podzol", new Podzol(new BID(Ids::PODZOL), "Podzol", new Info(BreakInfo::shovel(0.5), [Tags::DIRT])));
-		self::register("potatoes", new Potato(new BID(Ids::POTATOES), "Potato Block", new Info(BreakInfo::instant())));
+		self::register("potatoes", new Potato(new BID(Ids::POTATOES, \pocketmine\block\tile\Crops::class), "Potato Block", new Info(BreakInfo::instant())));
 		self::register("powered_rail", new PoweredRail(new BID(Ids::POWERED_RAIL), "Powered Rail", $railBreakInfo));
 
 		$prismarineBreakInfo = new Info(BreakInfo::pickaxe(1.5, ToolTier::WOOD, 30.0));
@@ -985,7 +985,7 @@ final class VanillaBlocks{
 		self::register("carved_pumpkin", new CarvedPumpkin(new BID(Ids::CARVED_PUMPKIN), "Carved Pumpkin", new Info(BreakInfo::axe(1.0), enchantmentTags: [EnchantmentTags::MASK])));
 		self::register("lit_pumpkin", new LitPumpkin(new BID(Ids::LIT_PUMPKIN), "Jack o'Lantern", $pumpkinBreakInfo));
 
-		self::register("pumpkin_stem", new PumpkinStem(new BID(Ids::PUMPKIN_STEM), "Pumpkin Stem", new Info(BreakInfo::instant())));
+		self::register("pumpkin_stem", new PumpkinStem(new BID(Ids::PUMPKIN_STEM, \pocketmine\block\tile\Crops::class), "Pumpkin Stem", new Info(BreakInfo::instant())));
 
 		$purpurBreakInfo = new Info(BreakInfo::pickaxe(1.5, ToolTier::WOOD, 30.0));
 		self::register("purpur", new Opaque(new BID(Ids::PURPUR), "Purpur Block", $purpurBreakInfo));
@@ -1108,7 +1108,7 @@ final class VanillaBlocks{
 		self::register("stone_slab", new Slab(new BID(Ids::STONE_SLAB), "Stone", $stoneSlabBreakInfo));
 
 		self::register("legacy_stonecutter", new Opaque(new BID(Ids::LEGACY_STONECUTTER), "Legacy Stonecutter", new Info(BreakInfo::pickaxe(3.5, ToolTier::WOOD))));
-		self::register("sugarcane", new Sugarcane(new BID(Ids::SUGARCANE), "Sugarcane", new Info(BreakInfo::instant())));
+		self::register("sugarcane", new Sugarcane(new BID(Ids::SUGARCANE, \pocketmine\block\tile\Crops::class), "Sugarcane", new Info(BreakInfo::instant())));
 		self::register("sweet_berry_bush", new SweetBerryBush(new BID(Ids::SWEET_BERRY_BUSH), "Sweet Berry Bush", new Info(BreakInfo::instant())));
 		self::register("tnt", new TNT(new BID(Ids::TNT), "TNT", new Info(BreakInfo::instant())));
 		self::register("fern", new TallGrass(new BID(Ids::FERN), "Fern", new Info(BreakInfo::instant(ToolType::SHEARS, 1), [Tags::POTTABLE_PLANTS])));
@@ -1143,7 +1143,7 @@ final class VanillaBlocks{
 			deactivationDelayTicks: 10,
 			signalStrengthFactor: 1.0
 		));
-		self::register("wheat", new Wheat(new BID(Ids::WHEAT), "Wheat Block", new Info(BreakInfo::instant())));
+		self::register("wheat", new Wheat(new BID(Ids::WHEAT, \pocketmine\block\tile\Crops::class), "Wheat Block", new Info(BreakInfo::instant())));
 
 		$leavesBreakInfo = new Info(new class(0.2, ToolType::HOE) extends BreakInfo{
 			public function getBreakTime(Item $item) : float{

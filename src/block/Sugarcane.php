@@ -92,12 +92,20 @@ class Sugarcane extends Flowable{
 			$supportBlock->hasTypeTag(BlockTypeTags::SAND);
 	}
 
-	public function ticksRandomly() : bool{
+	public function ticksRandomly(): bool
+	{
 		return true;
 	}
 
-	public function onRandomTick() : void{
-		if(!$this->getSide(Facing::DOWN)->hasSameTypeId($this)){
+	public function canUpdate(): bool
+	{
+		if (!$this->getPosition()->getWorld()->isChunkLoaded($this->getPosition()->getX() >> 4, $this->getPosition()->getZ() >> 4)) return false;
+		return true;
+	}
+
+	public function onScheduledUpdate(): void
+	{
+		if(!$this->getSide(Facing::DOWN)->hasSameTypeId($this) && $this->canUpdate()){
 			if($this->age === self::MAX_AGE){
 				$this->grow($this->position);
 			}else{
@@ -105,6 +113,8 @@ class Sugarcane extends Flowable{
 				$this->position->getWorld()->setBlock($this->position, $this);
 			}
 		}
+
+		$this->getPosition()->getWorld()->scheduleDelayedBlockUpdate($this->getPosition(), (60 * 5) * 20);
 	}
 
 	public function place(BlockTransaction $tx, Item $item, Block $blockReplace, Block $blockClicked, int $face, Vector3 $clickVector, ?Player $player = null) : bool{

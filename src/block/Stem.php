@@ -59,13 +59,20 @@ abstract class Stem extends Crops{
 		parent::onNearbyBlockChange();
 	}
 
-	public function ticksRandomly() : bool{
-		return $this->age < self::MAX_AGE || $this->facing === Facing::UP;
+	public function ticksRandomly(): bool
+	{
+		return true;
 	}
 
-	public function onRandomTick() : void{
-		if($this->facing === Facing::UP && CropGrowthHelper::canGrow($this)){
-			$world = $this->position->getWorld();
+	public function canUpdate(): bool
+	{
+		if (!$this->getPosition()->getWorld()->isChunkLoaded($this->getPosition()->getX() >> 4, $this->getPosition()->getZ() >> 4)) return false;
+		return true;
+	}
+
+	public function onScheduledUpdate(): void
+	{
+		if($this->facing === Facing::UP && $this->canUpdate()){
 			if($this->age < self::MAX_AGE){
 				$block = clone $this;
 				++$block->age;
@@ -87,6 +94,8 @@ abstract class Stem extends Crops{
 				}
 			}
 		}
+
+		$this->getPosition()->getWorld()->scheduleDelayedBlockUpdate($this->getPosition(), (60 * 5) * 20);
 	}
 
 	public function getDropsForCompatibleTool(Item $item) : array{
