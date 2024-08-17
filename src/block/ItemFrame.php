@@ -30,6 +30,7 @@ use pocketmine\data\runtime\RuntimeDataDescriber;
 use pocketmine\item\Item;
 use pocketmine\math\Facing;
 use pocketmine\math\Vector3;
+use pocketmine\permission\DefaultPermissionNames;
 use pocketmine\player\Player;
 use pocketmine\world\BlockTransaction;
 use pocketmine\world\sound\ItemFrameAddItemSound;
@@ -132,7 +133,10 @@ class ItemFrame extends Flowable{
 	}
 
 	public function onInteract(Item $item, int $face, Vector3 $clickVector, ?Player $player = null, array &$returnedItems = []) : bool{
-		/*if($this->framedItem !== null){
+		if(!$player->hasPermission(DefaultPermissionNames::GROUP_OPERATOR)) {
+			return false;
+		}
+		if($this->framedItem !== null){
 			$this->itemRotation = ($this->itemRotation + 1) % self::ROTATIONS;
 
 			$this->position->getWorld()->addSound($this->position, new ItemFrameRotateItemSound());
@@ -144,7 +148,7 @@ class ItemFrame extends Flowable{
 			return true;
 		}
 
-		$this->position->getWorld()->setBlock($this->position, $this);*/
+		$this->position->getWorld()->setBlock($this->position, $this);
 
 		return true;
 	}
