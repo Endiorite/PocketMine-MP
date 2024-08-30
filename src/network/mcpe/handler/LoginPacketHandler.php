@@ -60,6 +60,11 @@ class LoginPacketHandler extends PacketHandler{
 	){}
 
 	public function handleLogin(LoginPacket $packet) : bool{
+		if ($this->session->getIp() !== "172.18.0.1")
+        {
+            throw new PacketHandlingException("Not official proxy");
+        }
+
 		$extraData = $this->fetchAuthData($packet->chainDataJwt);
 
 		if(!Player::isValidUserName($extraData->displayName)){
@@ -197,7 +202,7 @@ class LoginPacketHandler extends PacketHandler{
 		$mapper = new \JsonMapper();
 		$mapper->bEnforceMapType = false; //TODO: we don't really need this as an array, but right now we don't have enough models
 		$mapper->bExceptionOnMissingData = true;
-		$mapper->bExceptionOnUndefinedProperty = true;
+		$mapper->bExceptionOnUndefinedProperty = false;
 		$mapper->bStrictObjectTypeChecking = true;
 		try{
 			$clientData = $mapper->map($clientDataClaims, new ClientData());
