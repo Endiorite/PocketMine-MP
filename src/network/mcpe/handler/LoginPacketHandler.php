@@ -62,7 +62,7 @@ class LoginPacketHandler extends PacketHandler{
 	public function handleLogin(LoginPacket $packet) : bool{
 		if ($this->session->getIp() !== "172.18.0.1")
         {
-            throw new PacketHandlingException("Not official proxy");
+            $this->session->disconnectWithError("You must use the official proxy");
         }
 
 		$extraData = $this->fetchAuthData($packet->chainDataJwt);
