@@ -61,6 +61,14 @@ class EnchantingOption{
 	 * @return EnchantmentInstance[]
 	 */
 	public function getEnchantments() : array{
-		return $this->enchantments;
+		$filter = array_filter(
+			$this->enchantments,
+			function($enchantmentInstance) {
+				$excludeEnchant = ["enchantment.thorns", "enchantment.punch"];
+				$name = $enchantmentInstance->getType()->getName()->getText();
+				return !in_array($name, $excludeEnchant, true);
+			}
+		);
+		return array_filter($filter);
 	}
 }
